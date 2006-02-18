@@ -1,0 +1,10 @@
+--- dvdrtools-0.3.0/configure.ac.orig	2006-02-18 19:38:23.000000000 +0100
++++ dvdrtools-0.3.0/configure.ac	2006-02-18 19:42:44.000000000 +0100
+@@ -443,6 +443,7 @@
+ AC_DEFINE([SIZE_PTR], [SIZE_CHARP], [Compatibility with cdrecord])
+ 
+ AC_PATH_PROGS([TRANSCODE], [transcode], [NO])
++TRANSCODE="YES"
+ if test "$TRANSCODE" = "NO"; then
+ 	AC_MSG_WARN([transcode was not found. Video DVD mastering tools will not be built.])
+ fi

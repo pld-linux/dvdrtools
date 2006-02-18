@@ -1,5 +1,4 @@
 # TODO: 
-# 	* Package /usr/bin/{cdda2mp3,cdda2ogg,devdump,ifogen,isodump,isovfy,makecd}
 #   * Apply relevant patches from cdrtools
 
 Summary:	A command line CD/DVD-Recorder
@@ -9,13 +8,14 @@ Summary(pt_BR):	Um programa de gravação de CD/DVD
 Summary(ru):	ðÒÏÇÒÁÍÍÁ ÄÌÑ ÚÁÐÉÓÉ CD/DVD, ÚÁÐÕÓËÁÅÍÁÑ ÉÚ ËÏÍÁÎÄÎÏÊ ÓÔÒÏËÉ
 Summary(uk):	ðÒÏÇÒÁÍÁ ÄÌÑ ÚÁÐÉÓÕ CD/DVD, ÑËÁ ÚÁÐÕÓËÁ¤ÔØÓÑ Ú ËÏÍÁÎÄÎÏ§ ÓÔÒ¦ÞËÉ
 Name:		dvdrtools
-Version:	0.2.1
+Version:	0.3.0
 Release:	1
 License:	GPL v2
 Group:		Applications/System
-Source0:	http://savannah.nongnu.org/download/dvdrtools/%{name}-%{version}.tar.gz
-# Source0-md5:	e82d359137e716e8c0b04d5c73bd3e79
-URL:		http://www.nongnu.org/dvdrtools/
+Source0:	http://www.arklinux.org/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	86d2dee8deb087351d73bc625d39920d
+Patch0:		%{name}-transcode.patch
+URL:		http://www.arklinux.org/projects/dvdrtools
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -95,8 +95,7 @@ Summary(ru):	õÔÉÌÉÔÁ ÄÌÑ ÐÏÌÕÞÅÎÉÑ ÆÁÊÌÏ× .WAV Ó digital audio CD
 Summary(uk):	õÔÉÌ¦ÔÁ ÄÌÑ ÇÅÎÅÒÁÃ¦§ ÆÁÊÌ¦× .WAV Ú digital audio CD
 Group:		Applications/Sound
 Provides:	cdda2wav
-Obsoletes:	cdda2wav
-Obsoletes:	cdrecord-cdda2wav
+Conflicts:	cdrtools-cdda2wav
 
 %description cdda2wav
 A sampling utility for cdrom drives that are capable of sending audio
@@ -141,7 +140,8 @@ CD-ÐÌÅÊ¤Ò.
 Summary:	Read/Write data Compact Discs
 Summary(pl):	Odczytuje/Zapisuje dane z P³yt Kompaktowych
 Group:		Applications/System
-Obsoletes:	cdrecord-readcd
+Provides:	readcd
+Conflicts:	cdrtools-readcd
 
 %description readcd
 Read/Write data Compact Discs.
@@ -153,6 +153,7 @@ Odczytuje/Zapisuje dane z P³yt Kompaktowych.
 Summary:	Dumping and verifying iso9660 images
 Summary(pl):	Zrzucanie i weryfikacja obrazów iso9660
 Group:		Applications/System
+Conflicts:	cdrtools-utils
 
 %description utils
 Utility programs for dumping and verifying iso9660 images.
@@ -172,7 +173,8 @@ Summary(tr):	ISO9660 dosya sistemi kopyasý oluþturur
 Summary(uk):	óÔ×ÏÒÀ¤ ÏÂÒÁÚ ÆÁÊÌÏ×Ï§ ÓÉÓÔÅÍÉ ISO9660
 Group:		Applications/System
 Provides:	mkisofs
-Obsoletes:	mkisofs
+Provides:	cdrtools-mkisofs
+Obsoletes:	cdrtools-mkisofs
 
 %description mkisofs
 This is the mkisofs package. It is used to create ISO 9660 file system
@@ -208,8 +210,24 @@ fazer CD-ROMs de boot "El Torito".
 ×ÉËÏÒÉÓÔÏ×Õ¤ÔØÓÑ ÄÌÑ ÚÁÐÉÓÕ CD-ROM'¦× ¦ ÍÁ¤ Ð¦ÄÔÒÉÍËÕ ÓÔ×ÏÒÅÎÎÑ
 ÚÁ×ÁÎÔÁÖÕ×ÁÎÉÈ El Torito CD-ROM'¦×.
 
+%package video
+Summary:	Tools for mastering video DVDs
+Summary(pl):	Narzêdzie do tworzenia p³yt video DVD
+Group:		Applications/Multimedia
+Requires:	transcode
+
+%description video
+Tools for mastering video DVDs. At the moment, you can write MPEG and
+AVI videos to DVD, but you can not (yet) create DVD menus.
+
+%description video
+Narzêdzie do tworzenia p³yt video DVD. Umo¿liwia nagrywanie filmów 
+w formacie MPEG i AVI na p³ytê DVD, ale (jeszcze) bez mo¿liwo¶ci 
+tworzenia menu.
+
 %prep
 %setup -q 
+%patch0 -p1
 chmod +w -R *
 
 %build
@@ -225,13 +243,17 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir}/schily/scg,%{_mandir}/{man1
 	MANDIR=share/man \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# fix manual pages
+echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
+echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
+echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc doc/cdrecord.ps README
+%doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/dvdrecord
 %{_mandir}/man1/dvdrecord.1*
 
@@ -247,6 +269,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt
 %doc cdda2wav/FAQ
 %attr(755,root,root) %{_bindir}/cdda2wav
+%attr(755,root,root) %{_bindir}/cdda2mp3
+%attr(755,root,root) %{_bindir}/cdda2ogg
 %{_mandir}/man1/cdda2wav.1*
 
 %files readcd
@@ -256,8 +280,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files utils
 %defattr(644,root,root,755)
+%doc mkisofs/diag/README
+%attr(755,root,root) %{_bindir}/devdump
+%attr(755,root,root) %{_bindir}/isodump
 %attr(755,root,root) %{_bindir}/isoinfo
+%attr(755,root,root) %{_bindir}/isovfy
+%{_mandir}/man8/devdump.8*
+%{_mandir}/man8/isodump.8*
 %{_mandir}/man8/isoinfo.8*
+%{_mandir}/man8/isovfy.8*
 
 %files mkisofs
 %defattr(644,root,root,755)
@@ -268,3 +299,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc mkisofs/README.sort mkisofs/README.sparcboot
 %attr(755,root,root) %{_bindir}/mkisofs
 %{_mandir}/man8/mkisofs.8*
+
+%files video
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ifogen
+%attr(755,root,root) %{_bindir}/makecd
