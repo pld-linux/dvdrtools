@@ -55,16 +55,16 @@ Group:		Development/Libraries
 Obsoletes:	cdrecord-devel
 
 %description devel
-The %{name} distribution contains a SCSI user level transport library.
-The SCSI library is suitable to talk to any SCSI device without having
-a special driver for it. Cdrecord may be easily ported to any system
-that has a SCSI device driver similar to the scg driver.
+The dvdrtools distribution contains a SCSI user level transport
+library. The SCSI library is suitable to talk to any SCSI device
+without having a special driver for it. Cdrecord may be easily ported
+to any system that has a SCSI device driver similar to the scg driver.
 
 %description devel -l pl
-Dystrybucja %{name} zawiera bibliotekê dostêpu do warstwy transportu w
-SCSI. Poprzez bibliotekê mo¿na komunikowaæ siê z dowolnym urz±dzeniem
-SCSI bez potrzeby posiadania specjalnego sterownika do tego
-urz±dzenia.
+Dystrybucja dvdrtools zawiera bibliotekê dostêpu do warstwy transportu
+w SCSI. Poprzez bibliotekê mo¿na komunikowaæ siê z dowolnym
+urz±dzeniem SCSI bez potrzeby posiadania specjalnego sterownika do
+tego urz±dzenia.
 
 %description devel -l pt_BR
 O dvdrtools contém uma biblioteca de transporte de dados por SCSI "user
@@ -221,9 +221,8 @@ Tools for mastering video DVDs. At the moment, you can write MPEG and
 AVI videos to DVD, but you can not (yet) create DVD menus.
 
 %description video
-Narzêdzie do tworzenia p³yt video DVD. Umo¿liwia nagrywanie filmów 
-w formacie MPEG i AVI na p³ytê DVD, ale (jeszcze) bez mo¿liwo¶ci 
-tworzenia menu.
+Narzêdzie do tworzenia p³yt video DVD. Umo¿liwia nagrywanie filmów w
+formacie MPEG i AVI na p³ytê DVD, ale (jeszcze) bez tworzenia menu.
 
 %prep
 %setup -q 
