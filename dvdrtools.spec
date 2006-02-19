@@ -19,7 +19,7 @@ URL:		http://www.arklinux.org/projects/dvdrtools
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libmagic-devel
-Provides:	cdrecord
+Provides:	cdrecord = 5:2.0
 Obsoletes:	cdrtools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -98,7 +98,7 @@ Summary(pt_BR):	Cria arquivos tipo WAV a partir de CDs de Аudio
 Summary(ru):	Утилита для получения файлов .WAV с digital audio CD
 Summary(uk):	Утил╕та для генерац╕╖ файл╕в .WAV з digital audio CD
 Group:		Applications/Sound
-Provides:	cdda2wav
+Provides:	cdda2wav = 5:2.0
 Obsoletes:	cdrtools-cdda2wav
 
 %description cdda2wav
@@ -144,7 +144,7 @@ CD-плей╓р.
 Summary:	Read/Write data Compact Discs
 Summary(pl):	Odczytuje/Zapisuje dane z PЁyt Kompaktowych
 Group:		Applications/System
-Provides:	readcd
+Provides:	readcd = 5:2.0
 Obsoletes:	cdrtools-readcd
 
 %description readcd
@@ -176,7 +176,7 @@ Summary(ru):	Создает образ файловой системы ISO9660
 Summary(tr):	ISO9660 dosya sistemi kopyasЩ oluЧturur
 Summary(uk):	Створю╓ образ файлово╖ системи ISO9660
 Group:		Applications/System
-Provides:	mkisofs
+Provides:	mkisofs = 5:2.0
 Provides:	cdrtools-mkisofs
 Obsoletes:	cdrtools-mkisofs
 
