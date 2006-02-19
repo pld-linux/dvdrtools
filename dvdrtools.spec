@@ -18,28 +18,31 @@ Patch0:		%{name}-transcode.patch
 URL:		http://www.arklinux.org/projects/dvdrtools
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libmagic-devel
+Provides:	cdrecord
+Obsoletes:	cdrtools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Cdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
+Dvdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
 Supports data, audio, mixed, multi-session and CD+ discs etc.
 
 %description -l pl
-Cdrecord pozwala tworzyФ CD na nagrywarce CD (SCSI/ATAPI). ObsЁuguje
+Dvdrecord pozwala tworzyФ CD na nagrywarce CD (SCSI/ATAPI). ObsЁuguje
 dyski z danymi, d╪wiЙkiem, mieszane, wielosesyjne, CD+ i inne.
 
 %description -l pt_BR
-Cdrecord permite que vocЙ crie CDs em seu gravador de CDs SCSI/ATAPI.
+Dvdrecord permite que vocЙ crie CDs em seu gravador de CDs SCSI/ATAPI.
 и possМvel gravar dados, Аudio, misturados, multi-seГЦo e CD+.
 
 %description -l ru
-Cdrecord - это программа для создания аудио и цифровых CD. Cdrecord
+Dvdrecord - это программа для создания аудио и цифровых CD. Dvdrecord
 работает со многими типами CD-рекордеров разных производителей,
 полностью поддерживает multi-session и сообщает об ошибках в формате,
 пригодном для чтения человеком.
 
 %description -l uk
-Cdrecord - це програма для створення ауд╕о та програмних CD. Cdrecord
+Dvdrecord - це програма для створення ауд╕о та програмних CD. Dvdrecord
 працю╓ з багатьма типами CD-рекордер╕в р╕зних виробник╕в, повн╕стю
 п╕дтриму╓ multi-session ╕ пов╕домля╓ про помилки у формат╕, придатному
 для читання людиною.
@@ -53,6 +56,7 @@ Summary(ru):	SCSI-библиотека libschily
 Summary(uk):	SCSI-б╕бл╕отека libschily
 Group:		Development/Libraries
 Obsoletes:	cdrecord-devel
+Obsoletes:	cdrtools-devel
 
 %description devel
 The dvdrtools distribution contains a SCSI user level transport
@@ -95,7 +99,7 @@ Summary(ru):	Утилита для получения файлов .WAV с digital audio CD
 Summary(uk):	Утил╕та для генерац╕╖ файл╕в .WAV з digital audio CD
 Group:		Applications/Sound
 Provides:	cdda2wav
-Conflicts:	cdrtools-cdda2wav
+Obsoletes:	cdrtools-cdda2wav
 
 %description cdda2wav
 A sampling utility for cdrom drives that are capable of sending audio
@@ -141,7 +145,7 @@ Summary:	Read/Write data Compact Discs
 Summary(pl):	Odczytuje/Zapisuje dane z PЁyt Kompaktowych
 Group:		Applications/System
 Provides:	readcd
-Conflicts:	cdrtools-readcd
+Obsoletes:	cdrtools-readcd
 
 %description readcd
 Read/Write data Compact Discs.
@@ -153,7 +157,7 @@ Odczytuje/Zapisuje dane z PЁyt Kompaktowych.
 Summary:	Dumping and verifying iso9660 images
 Summary(pl):	Zrzucanie i weryfikacja obrazСw iso9660
 Group:		Applications/System
-Conflicts:	cdrtools-utils
+Obsoletes:	cdrtools-utils
 
 %description utils
 Utility programs for dumping and verifying iso9660 images.
@@ -227,9 +231,11 @@ formacie MPEG i AVI na pЁytЙ DVD, ale (jeszcze) bez tworzenia menu.
 %prep
 %setup -q 
 %patch0 -p1
-chmod +w -R *
 
 %build
+%{__aclocal}
+%{__autoheader}
+%{__automake}
 %{__autoconf}
 %configure
 %{__make}
@@ -247,12 +253,15 @@ echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
+ln -sf %{_bindir}/dvdrecord \
+        $RPM_BUILD_ROOT%{_bindir}/cdrecord
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
+%attr(755,root,root) %{_bindir}/cdrecord
 %attr(755,root,root) %{_bindir}/dvdrecord
 %{_mandir}/man1/dvdrecord.1*
 
