@@ -8,12 +8,12 @@ Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD
 Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		dvdrtools
-Version:	0.3.0
+Version:	0.3.1
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://www.arklinux.org/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	86d2dee8deb087351d73bc625d39920d
+# Source0-md5:	2eab3999d840910562b98cc83615c31c
 Patch0:		%{name}-transcode.patch
 URL:		http://www.arklinux.org/projects/dvdrtools
 BuildRequires:	autoconf
