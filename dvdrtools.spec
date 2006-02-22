@@ -18,7 +18,6 @@ Patch0:		%{name}-transcode.patch
 URL:		http://www.arklinux.org/projects/dvdrtools
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libmagic-devel
 Provides:	cdrecord = 5:2.0
 Obsoletes:	cdrtools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
