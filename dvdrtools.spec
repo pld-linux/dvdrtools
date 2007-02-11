@@ -223,7 +223,7 @@ Requires:	transcode
 Tools for mastering video DVDs. At the moment, you can write MPEG and
 AVI videos to DVD, but you can not (yet) create DVD menus.
 
-%description video
+%description video -l pl
 Narzêdzie do tworzenia p³yt video DVD. Umo¿liwia nagrywanie filmów w
 formacie MPEG i AVI na p³ytê DVD, ale (jeszcze) bez tworzenia menu.
 
